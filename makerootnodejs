@@ -38,7 +38,7 @@ cd buildroot-$BUILDROOT_VERSION
 patch -p0 < ../../buildroot-nodejs.patch
 
 # copy buildroot config
-cp ../../rootnode.config .config
+cp ../../rootnodejs.config .config
 make
 
 cd output/images
