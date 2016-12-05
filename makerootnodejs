@@ -1,0 +1,56 @@
+#!/bin/sh
+ 
+BUILDROOT_VERSION=2016.11
+BUILDROOT_SHA1=5ed6f68d329c7036166e65cdf2de584f1c9aa917
+
+startdir=`pwd`
+
+clean()
+{
+	cd $startdir
+	rm -rf build
+}
+
+if [ ! -d build ]
+then
+	mkdir build
+fi
+cd build
+
+if [ ! -f buildroot-$BUILDROOT_VERSION.tar.bz2 ]
+then
+	echo Download https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
+	wget -q https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -O buildroot-$BUILDROOT_VERSION.tar.bz2
+fi
+echo "$BUILDROOT_SHA1  buildroot-$BUILDROOT_VERSION.tar.bz2" > buildroot-$BUILDROOT_VERSION.tar.bz2.sha1
+sha1sum  -c buildroot-$BUILDROOT_VERSION.tar.bz2.sha1
+
+if [ $? != 0 ]
+then
+	#clean
+	exit $?
+fi
+
+tar xf buildroot-$BUILDROOT_VERSION.tar.bz2
+cd buildroot-$BUILDROOT_VERSION
+
+# patch to change nodejs version to 6.9.1
+patch -p0 < ../../buildroot-nodejs.patch
+
+# copy buildroot config
+cp ../../rootnode.config .config
+make
+
+cd output/images
+echo '# Root Node.JS
+#
+FROM scratch
+MAINTAINER froyer "froyer@axway.com"
+
+ADD rootfs.tar /
+
+CMD ["/usr/bin/node"]' > Dockerfile
+
+docker build -t froyer71/scratch-node-js .
+
+#clean
