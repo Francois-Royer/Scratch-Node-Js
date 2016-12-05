@@ -5,5 +5,9 @@ It adds also libaio 1.0.1. There is only one executable: /usr/bin/node.
 The goal of this images it to make production images for nodejs application.
 It use glibc to allow using binaries like Oracle InstantClient.
 
+As there is no shell in image, you have use docker CMD with exec format, not shell command line:
+```
+CMD ["/usr/bin/node", "./src/index.js"]
+```
 
 
