@@ -165,3 +165,15 @@ diff -Naur package/nodejs/nodejs.hash package/nodejs/nodejs.hash
 -sha256  ceb028324aab1ee8c7ea6a62026f036f3ea71f5ef5212593d0f833f999dd3be5  node-v6.7.0.tar.xz
 +# From upstream URL: http://nodejs.org/dist/v6.9.1/SHASUMS256.txt
 +sha256  0bdd8d1305777cc8cd206129ea494d6c6ce56001868dd80147aff531d6df0729  node-v6.9.1.tar.xz
+diff -Naur package/nodejs/nodejs.mk package/nodejs/nodejs.mk
+--- package/nodejs/nodejs.mk    2016-11-30 23:16:22.000000000 +0100
++++ package/nodejs/nodejs.mk    2016-12-05 18:05:57.970801643 +0100
+@@ -23,8 +23,6 @@
+ ifeq ($(BR2_PACKAGE_OPENSSL),y)
+ NODEJS_DEPENDENCIES += openssl
+ NODEJS_CONF_OPTS += --shared-openssl
+-else
+-NODEJS_CONF_OPTS += --without-ssl
+ endif
+ 
+ # 0.10.x does not have icu support
