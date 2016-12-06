@@ -3,14 +3,6 @@
 BUILDROOT_VERSION=2016.11
 BUILDROOT_SHA1=5ed6f68d329c7036166e65cdf2de584f1c9aa917
 
-startdir=`pwd`
-
-clean()
-{
-	cd $startdir
-	rm -rf build
-}
-
 if [ ! -d build ]
 then
 	mkdir build
@@ -27,7 +19,6 @@ sha1sum  -c buildroot-$BUILDROOT_VERSION.tar.bz2.sha1
 
 if [ $? != 0 ]
 then
-	#clean
 	exit $?
 fi
 
@@ -52,5 +43,3 @@ ADD rootfs.tar /
 CMD ["/usr/bin/node"]' > Dockerfile
 
 docker build -t froyer71/scratch-node-js .
-
-#clean

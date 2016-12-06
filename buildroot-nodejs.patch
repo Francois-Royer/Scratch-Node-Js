@@ -168,7 +168,16 @@ diff -Naur package/nodejs/nodejs.hash package/nodejs/nodejs.hash
 diff -Naur package/nodejs/nodejs.mk package/nodejs/nodejs.mk
 --- package/nodejs/nodejs.mk    2016-11-30 23:16:22.000000000 +0100
 +++ package/nodejs/nodejs.mk    2016-12-05 18:05:57.970801643 +0100
-@@ -23,8 +23,6 @@
+@@ -14,17 +14,14 @@
+ NODEJS_LICENSE_FILES = LICENSE
+ 
+ NODEJS_CONF_OPTS = \
+-       --without-snapshot \
+        --without-dtrace \
+        --without-etw \
++       --without-perfct \
+        --dest-os=linux
+ 
  ifeq ($(BR2_PACKAGE_OPENSSL),y)
  NODEJS_DEPENDENCIES += openssl
  NODEJS_CONF_OPTS += --shared-openssl
